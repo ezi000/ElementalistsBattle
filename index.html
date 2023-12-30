@@ -8,11 +8,70 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="h1-content">
+    
       <div id="authentication">
-        <button id="login">Log in</button>
-        <button id="signup">Sign up</button>
+        <button data-modal-target="#modal">Log in</button>
+        <button data-modal-target="#modal1">Sign in</button>
+        <div class="modal" id="modal">
+          <div class="modal-header">
+            <button data-close-button class="close-button">&times;</button>
+          </div>
+          <div class="modal-body">
+            <label for="name">Login</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              minlength="4"
+              size="10"
+            />
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              minlength="4"
+              size="10"
+            />
+            <button>Log in</button>
+          </div>
+        </div>
       </div>
+      <div class="modal" id="modal1">
+        <div class="modal-header">
+          <button data-close-button class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+          <label for="name">Login</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            minlength="4"
+            size="10"
+          />
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            minlength="4"
+            size="10"
+          />
+          <button>Sign up</button>
+        </div>
+      </div>
+    
+    
+
+
+
+    <div id="overlay"></div>
+
       <h1 id="h1">Rock, Paper or Scissors?</h1>
       <div id="wybory">
         <div id="ja">

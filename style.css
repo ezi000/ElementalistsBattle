@@ -3,6 +3,10 @@ body {
   margin: 0;
   background: #8ecae6;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 h1 {
@@ -60,13 +64,6 @@ button:hover {
   width: 200px;
 }
 
-#h1-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 #computer,
 #you {
   display: flex;
@@ -87,16 +84,99 @@ button:hover {
   margin: 20px 50px 0px 0px;
 }
 
-#login,
-#signup {
-  border-radius: 0.5dvh;
-  border: #34899e 0.1px solid;
-  padding: 10px 20px 10px 20px;
-  background-color: rgb(46, 134, 134);
-  font-weight: 900;
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
 }
 
-#login:hover,
-#signup:hover {
-  background-color: rgb(41, 119, 78);
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: white;
+  width: 300px;
+  max-width: 80%;
+}
+
+.modal.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+  padding: 10px 10px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.modal-header .title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.modal-header .close-button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 15px;
+  font-weight: bold;
+}
+
+.modal-body > button {
+  margin-top: 10px;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 0;
+  background-color: cyan;
+}
+
+#overlay {
+  position: fixed;
+  opacity: 0;
+  transition: 200ms ease-in-out;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+#overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-body > input {
+  margin-top: 6px;
+  margin-bottom: 15px;
+}
+
+button[data-modal-target="#modal"],
+button[data-modal-target="#modal1"] {
+  background-color: #509848;
+  border-radius: 10px;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+}
+
+button[data-modal-target="#modal"]:hover,
+button[data-modal-target="#modal1"]:hover {
+  background-color: #355c31;
 }
