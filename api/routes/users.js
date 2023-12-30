@@ -20,23 +20,39 @@ router.post("/signin", (req, res, next) => {
   });
 });
 
-// logowanie
-router.post("/login", (req, res, next) => {
-  // 1. sprawdzenie username
-  User.findOne({ username: req.body.username }).then((user) => {
-    // jeżeli user jest pusty tzn. że nie mam takiego w bazie
-    if (!user) return res.status(403).json({ wiadomosc: "Błąd autoryzacji" });
-    // mam taki username to sprawdzam hasło
-    bcrypt.compare(req.body.password, user.password).then((result) => {
-      if (!result)
-        return res.status(403).json({ wiadomosc: "Błąd autoryzacji" });
-      // hasło i username są poprawne zatem utwórz JWT (JSON Web Tokens)
-      const token = jwt.sign({ username: user.username }, process.env.JWT_KEY, {
-        expiresIn: "3h",
-      });
-      res.status(200).json(token);
-    });
+router.post("/login", async (req, res, next) => {
+  const user = await User.findOne({ username: req.body.username });
+
+  if (!user) {
+    return res.status(403).json({ wiadomosc: "Błąd autoryzacji" });
+  }
+
+  const bcryptResult = await bcrypt.compare(req.body.password, user.password);
+
+  if (!bcryptResult) {
+    return res.status(403).json({ wiadomosc: "Błąd autoryzacji" });
+  }
+
+  const token = jwt.sign({ username: user.username }, process.env.JWT_KEY, {
+    expiresIn: "3h",
   });
+
+  return res
+    .cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    })
+    .status(200)
+    .json({
+      message: "Logged in",
+      token,
+    });
+});
+
+router.post("/logout", async (req, res, next) => {
+  res.clearCookie("token");
+
+  return res.json({ message: "Logged out" });
 });
 
 module.exports = router;

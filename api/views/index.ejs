@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <script src="script.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Macondo+Swash+Caps&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="authentication">
+      <% if (userName) { %>
+      <button id="logout">Logout</button>
+      <% }else { %>
+      <button data-modal-target="#modal">Log in</button>
+      <button data-modal-target="#modal1">Sign up</button>
+      <% } %>
+
+      <div class="modal" id="modal">
+        <div class="modal-header">
+          <button data-close-button class="close-button">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <label for="name">Login</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            minlength="4"
+            size="10"
+          />
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            minlength="4"
+            size="10"
+          />
+          <button onclick="logowanko()" id="zaloguj">Log in</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="modal1">
+      <div class="modal-header">
+        <button data-close-button class="close-button">&times;</button>
+      </div>
+      <div class="modal-body">
+        <label for="name">Login</label>
+        <input
+          type="text"
+          id="name1"
+          name="name"
+          required
+          minlength="4"
+          size="10"
+        />
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password1"
+          name="password"
+          required
+          minlength="4"
+          size="10"
+        />
+        <button onclick="rejestrowanko()" id="zarejestruj">Sign up</button>
+      </div>
+    </div>
+
+    <div id="overlay"></div>
+
+    <h1 id="h1">Rock, Paper or Scissors?</h1>
+    <div id="wybory">
+      <div id="ja">
+        <div id="xd">🔵</div>
+        <div id="you">
+          <p>You:</p>
+          <p id="wygrane">0</p>
+        </div>
+      </div>
+      <div id="komputer">
+        <div id="xdd">🔵</div>
+        <div id="computer">
+          <p>Computer:</p>
+          <p id="przegrane">0</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <button id="kamien">
+        <div class="rock">✊</div>
+      </button>
+      <button id="papier">
+        <div class="paper">✋</div>
+      </button>
+      <button id="nozyczki">
+        <div class="scissors">✌</div>
+      </button>
+    </div>
+  </body>
+</html>
+
+<script>
+  const zaloguj = document.getElementById("zaloguj");
+  const zarejestruj = document.getElementById("zarejestruj");
+  const wyloguj = document.getElementById("logout");
+
+  wyloguj.addEventListener("click", async () => {
+    try {
+      await fetch("http://localhost:3000/users/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      window.location.reload();
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  });
+
+  zaloguj.addEventListener("click", (event) => {});
+
+  function logowanko() {
+    const loginLog = document.getElementById("name").value;
+    const passwordLog = document.getElementById("password").value;
+    fetch("http://localhost:3000/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: loginLog,
+        password: passwordLog,
+      }),
+    }).then((data) => {
+      window.location.reload();
+    });
+  }
+
+  zarejestruj.addEventListener("click", (event) => {});
+
+  function rejestrowanko() {
+    const loginSign = document.getElementById("name1").value;
+    const passwordSign = document.getElementById("password1").value;
+    fetch("http://localhost:3000/users/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: loginSign,
+        password: passwordSign,
+      }),
+    }).then((data) => {
+      window.location.reload();
+    });
+  }
+</script>

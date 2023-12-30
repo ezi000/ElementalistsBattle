@@ -2,9 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+
 const playerRoutes = require("./api/routes/players");
 const userRoutes = require("./api/routes/users");
-const path = require("path");
+const indexRoutes = require("./api/routes/index.js");
 
 //zmienne środowiskowe
 require("dotenv").config();
@@ -18,17 +21,21 @@ mongoose.connect(
 
 //tworzę instancje expressa
 const app = express();
+app.use(cookieParser());
+app.set("views", "api/views");
+app.set("view engine", "ejs");
 app.use(express.json());
+app.use(express.static(__dirname + "/api/public"));
 
 //logger
 app.use(morgan("combined"));
 
 //routy
 app.use("/players", playerRoutes);
-
 app.use("/users", userRoutes);
+app.use("/", indexRoutes);
 
-app.use("/", express.static(path.join(__dirname, ".")));
+//app.use("/", express.static(path.join(__dirname, ".")));
 
 app.use((req, res, next) => {
   res.status(404).json({ wiadomosc: "Nie odnaleziono" });

@@ -168,7 +168,8 @@ button:hover {
 }
 
 button[data-modal-target="#modal"],
-button[data-modal-target="#modal1"] {
+button[data-modal-target="#modal1"],
+#logout {
   background-color: #509848;
   border-radius: 10px;
   color: #ffffff;
@@ -177,6 +178,7 @@ button[data-modal-target="#modal1"] {
 }
 
 button[data-modal-target="#modal"]:hover,
-button[data-modal-target="#modal1"]:hover {
+button[data-modal-target="#modal1"]:hover,
+#logout:hover {
   background-color: #355c31;
 }
