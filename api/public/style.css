@@ -182,3 +182,41 @@ button[data-modal-target="#modal1"]:hover,
 #logout:hover {
   background-color: #355c31;
 }
+
+.scoreboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  margin-top: 100px;
+  width: 40vw;
+  border: 1px solid;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid black;
+  text-align: center;
+}
+
+.modalik {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  z-index: 10;
+  background-color: #355c31;
+  border-radius: 10rem;
+  width: 300px;
+  max-width: 80%;
+  text-align: center;
+}
+
+.modalik.active {
+  transform: translate(-50%, -50%) scale(1);
+}

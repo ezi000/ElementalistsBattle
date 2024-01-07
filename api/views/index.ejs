@@ -77,6 +77,19 @@
       </div>
     </div>
 
+    <div id="myModal" class="modalik">
+      <div
+        class="modal-content"
+        style="
+          background-color: rgb(177, 237, 245);
+          padding: 50px;
+          border-radius: 1rem;
+        "
+      >
+        <p id="napisModal" style="padding: 0">You WON/LOST this battle!</p>
+      </div>
+    </div>
+
     <div id="overlay"></div>
 
     <h1 id="h1">Rock, Paper or Scissors?</h1>
@@ -107,6 +120,29 @@
       <button id="nozyczki">
         <div class="scissors">✌</div>
       </button>
+    </div>
+
+    <div class="scoreboard">
+      <% if (userName) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Nick</th>
+            <th>Wins</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= userName %></td>
+            <td><%= scoreboard %></td>
+          </tr>
+        </tbody>
+      </table>
+      <% }else { %>
+      <h2 style="margin-top: 70px">
+        If you want to see your total wins, just log in!
+      </h2>
+      <% } %>
     </div>
   </body>
 </html>

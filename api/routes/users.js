@@ -2,16 +2,16 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const checkAuth = require("../middleware/checkAuth");
 const router = express.Router();
+const userservice = require("../services/userservice");
 
-//zakładanie konta (metoda POST)
 router.post("/signin", (req, res, next) => {
-  // TODO: sprawdzenie czy nie ma już usera o podanym username
   bcrypt.hash(req.body.password, 10).then((hash) => {
-    //store hash in your password DB
     const user = new User({
       username: req.body.username,
       password: hash,
+      wins: 0,
     });
     user
       .save()
@@ -49,10 +49,20 @@ router.post("/login", async (req, res, next) => {
     });
 });
 
-router.post("/logout", async (req, res, next) => {
+router.post("/logout", (req, res, next) => {
   res.clearCookie("token");
 
   return res.json({ message: "Logged out" });
+});
+
+router.put("/wins", checkAuth, async (req, res, next) => {
+  const user = await userservice.get_user(req.username);
+  if (user == undefined) {
+    return res.json({ message: "user wins cannot be updated" });
+  } else {
+    await userservice.update_wins(user._id, user.wins);
+    return res.json({ message: "user wins updated" });
+  }
 });
 
 module.exports = router;

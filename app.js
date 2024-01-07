@@ -5,7 +5,6 @@ const morgan = require("morgan");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 
-const playerRoutes = require("./api/routes/players");
 const userRoutes = require("./api/routes/users");
 const indexRoutes = require("./api/routes/index.js");
 
@@ -31,7 +30,6 @@ app.use(express.static(__dirname + "/api/public"));
 app.use(morgan("combined"));
 
 //routy
-app.use("/players", playerRoutes);
 app.use("/users", userRoutes);
 app.use("/", indexRoutes);
 
